@@ -20,6 +20,7 @@ Clone in c of [boomer by tsoding](https://github.com/tsoding/boomer)
 
 - [ ] screenshot without scrot 
 - [ ] zoom with scroll
+- [ ] embed shaders on install
 
 ##  We're Using GitHub Under Protest
 
