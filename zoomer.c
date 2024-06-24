@@ -8,6 +8,7 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
+
 SDL_Window *w;
 SDL_Renderer *r;
 
@@ -128,7 +129,7 @@ int main(int argc, char *argv[])
 	SDL_Event e;
 	float camPos[2] = {0.};
 	float mousePos[2] = {0.};
-	int zoom = 0;
+	float zoom = 1;
 	int tick = 0;
 	while(!shouldClose){
 		while(SDL_PollEvent(&e)){
@@ -155,7 +156,7 @@ int main(int argc, char *argv[])
 					}
 					break;
 				case SDL_MOUSEWHEEL:
-					zoom += e.wheel.y;
+					zoom += e.wheel.y/10.;
 					break;
 			}
 		}
@@ -163,7 +164,7 @@ int main(int argc, char *argv[])
 		glClear(GL_COLOR_BUFFER_BIT);
 		glUniform2f(glGetUniformLocation(pshader, "camPos"), camPos[0], camPos[1]);
 		glUniform2f(glGetUniformLocation(pshader, "mousePos"), mousePos[0], mousePos[1]);
-		glUniform1i(glGetUniformLocation(pshader, "zoom"), zoom);
+		glUniform1f(glGetUniformLocation(pshader, "zoom"), zoom);
 		glUniform1i(glGetUniformLocation(pshader, "tick"), tick);
 		
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
