@@ -68,11 +68,20 @@ int main(int argc, char *argv[])
 
 	GLuint vshader = glCreateShader(GL_VERTEX_SHADER),
 		   fshader = glCreateShader(GL_FRAGMENT_SHADER);
-	const char *vshadersrc = readFile("vshader.glsl"),
-			   *fshadersrc = readFile("fshader.glsl");
 
-	glShaderSource(vshader, 1, &vshadersrc, NULL);
-	glShaderSource(fshader, 1, &fshadersrc, NULL);
+#ifndef EMBED_SHADER
+	long vshader_glsl_len, fshader_glsl_len;
+	const char *vshadersrc = readFile("vshader.glsl", &vshader_glsl_len),
+			   *fshadersrc = readFile("fshader.glsl", &fshader_glsl_len);
+#else
+#include "vshader.h"
+#include "fshader.h"
+const char *vshadersrc = vshader_glsl,
+		   *fshadersrc = fshader_glsl;
+#endif
+
+	glShaderSource(vshader, 1, &vshadersrc, (int *)&vshader_glsl_len);
+	glShaderSource(fshader, 1, &fshadersrc, (int *)&fshader_glsl_len);
 
 	glCompileShader(vshader);
 	glCompileShader(fshader);

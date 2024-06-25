@@ -9,16 +9,16 @@ const char* pullArg(int *argc, char** argv[]){
 	return *argv[0]++;
 }
 
-const char *readFile(const char* filename){
+const char* readFile(const char* filename, long *size){
 	FILE *fd = fopen(filename, "r");
 	
 	fseek(fd, 0, SEEK_END);
-	long size = ftell(fd);
+	*size = ftell(fd);
 	rewind(fd);
 
-	char* ret = malloc(size+1);
-	fread(ret, sizeof(char), size, fd);
-	ret[size] = 0;
+	char* ret = malloc(*size+1);
+	fread(ret, sizeof(char), *size, fd);
+	ret[*size] = 0;
 	return ret;
 }
 

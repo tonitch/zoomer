@@ -2,3 +2,5 @@
 compile_commands.json
 zoomer
 zoomer.o
+fshader.h
+vshader.h
